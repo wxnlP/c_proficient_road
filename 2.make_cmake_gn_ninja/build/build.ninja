@@ -1,0 +1,32 @@
+# 变量定义
+cc = gcc
+cflags = -Iinclude -Wall -g
+src_dir = src
+obj_dir = build
+bin_dir = out
+
+# 规则定义
+## 编译
+rule compile
+  command = $cc $in -o $out $cflags -c
+  description = Compile $out
+
+## 链接
+rule link
+  command = $cc $in -o $out 
+  description = Link $out 
+
+# 构建目标
+## 编译源文件
+build $obj_dir/main.o : compile $src_dir/main.c
+build $obj_dir/function.o : compile $src_dir/function.c
+## 链接目标文件
+build $bin_dir/main : link $obj_dir/main.o $obj_dir/function.o
+
+# 默认目标
+default $bin_dir/main
+
+# 清理规则
+build clean: phony
+  command = rm -rf $obj_dir/*.o $bin_dir/main
+  description = clean done

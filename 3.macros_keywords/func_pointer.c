@@ -30,7 +30,6 @@ int main(void)
 		.age = 22,
 	};
 	register_callback(my_callback, &dt);
-
 	return 0;
 }
 
